@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>语音画布</title>
+</head>
+<style>
+    ul,li{
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .out{
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+    #title{
+        margin: 0 auto;
+    }
+    .lis-left{
+        width: 8%;
+        height: 100%;
+        background-color: #f7f7f7;
+        float: left;
+    }
+    .lis-center{
+        width: 80%;
+        height: 100%;
+        padding: 40px;
+        float: left;
+        position: relative;
+    }
+    .center_meng{
+        position:fixed;
+        bottom: 0;
+        left: 0;
+        width: 80%;
+        height: 100%;
+        margin-left: 8%;
+        z-index: 99;
+    }
+    .lis-right{
+        width: 12%;
+        height: 100%;
+        background-color: #f7f7f7;
+        float: left;
+    }
+    .lis-left li{
+        margin-bottom: 10px;
+        width: 100px;
+        height: 100px;
+        font-size: 30px;
+        background-color: #ccc;
+        text-align: center;
+        line-height: 100px;
+    }
+    .tianjia{
+        width: 100px;
+        height: 100px;
+        background-color: #ccc;
+        font-size: 65px;
+        text-align: center;
+        line-height: 100px;
+    }
+    .addTitle{
+        width: 300px;
+        height: 300px;
+        background-color: #ccc;
+        margin: 0 auto;
+        text-align: center;
+        font-size:
+    }
+    .home_page{
+        background-color: #f7f7f7;
+    }
+    .page{
+        width: 100%;
+        height: 100%;
+    }
+    .page_one_top{
+        display: flex;
+        justify-content:flex-start;
+    }
+    .page_one_top>div{
+        background-color: #f1f1f1;
+    }
+    .page_one_top>div.one_wenzi{
+        margin-left: 10px;
+    }
+    .one_voice,.one_words{
+        width: 150px;
+        height: 135px;
+        background-color: #f1f1f1;
+    }
+    .bot_input{
+        width: 50px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+    }
+    .change_line{
+        width: 1px;
+        height: 142px;
+        float: left;
+        margin-top: 11px;
+        background-color: #ccc;
+        margin-left: 26px;
+    }
+    .line_noneed{
+        margin-left: 89px;
+        height: 150px;
+        margin-top: 11px;
+    }
+    .noneed_top_left{
+        width: 50px;
+        height: 83px;
+        border-left: 1px solid #ccc;
+    }
+    .noneed_top_right{
+        width: 150px;
+        height: 50px;
+        border-top: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        float: left;
+        margin-right: 15px;
+    }
+    .noneed_page{
+        float: left;
+        margin-left: 50px;
+        background-color: #f1f1f1;
+    }
+    .noneed_page1{
+        width: 1px;
+        height: 121px;
+        margin-top: 11px;
+        background-color: #ccc;
+        margin-left: 26px;
+        margin-bottom: 10px;
+    }
+    .jdtz_page{
+        width: 81px;
+        height: 81px;
+        background-color: #f1f1f1;
+        text-align: center;
+        line-height: 30px;
+        border: none;
+    }
+    .page-bottom{
+        width: 100%;
+        height: 100px;
+    }
+    .lis-center-bottom{
+        position:fixed;
+        bottom: 0;
+        left: 0;
+        width: 80%;
+        height: 100px;
+        margin-left: 11%;
+        background-color: #999;
+        z-index: 199;
+    }
+    .center-bottom-text{
+        line-height: 100px;
+        font-size: 32px;
+        margin-left: 30px;
+        float: left;
+    }
+    .center-bottom-btn{
+        width: 70px;
+        height: 70px;
+        text-align: center;
+        line-height: 70px;
+        float: right;
+        background-color: #666;
+        margin-top: 20px;
+        margin-right: 20px;
+    }
+</style>
+<body>
+<div class="out">
+    <div class="lis-left">
+        <ul id="title">
+            <li class="firstPage">首页</li>
+            <li class="secondPages">景点</li>
+        </ul>
+        <div class="tianjia">+</div>
+    </div>
+    <div class="center_meng"></div>
+    <div class="lis-center">
+        <div class="page home_page">
+            {{--第一层逻辑--}}
+            <div class="home_page_one luoji">
+                <div class="page_one_top">
+                    <div class="one_yuyin">
+                        <div class="one_yuyin_title">语音内容</div>
+                        <div class="one_yuyin_text">
+                            <!-- <input type="text"> -->
+                            <textarea class="one_voice">{{$arr[0]['yuyin']}}</textarea>
+                        </div>
+                    </div>
+                    <div class="one_wenzi">
+                        <div class="one_wenzi_title">文字内容</div>
+                        <div class="one_wenzi_text">
+                            <!-- <input type="text"> -->
+                            <textarea class="one_words">{{$arr[0]['wenzi']}}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="page_one_bot">
+                    @foreach($arr[0]['menus'] as $val)
+                        <input class="bot_input" type="text" value="{{$val}}" />
+                    @endforeach
+                </div>
+            </div>
+
+            {{--两条线--}}
+            <div class="change_line"></div>
+            <div class="line_noneed">
+                <div class="noneed_top_left"></div>
+                <div class="noneed_top_right"></div>
+            </div>
+
+            {{--第二层逻辑--}}
+            <div class="home_page_one luoji">
+                <div class="page_one_top">
+                    <div class="one_yuyin">
+                        <div class="one_yuyin_title">语音内容</div>
+                        <div class="one_yuyin_text">
+                            <!-- <input type="text"> -->
+                            <textarea class="one_voice">{{$arr[1]['yuyin']}}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="one_yuyin noneed_page">
+                        <div class="one_yuyin_title">板块跳转</div>
+                        <div class="one_yuyin_text">
+                            <input type="text" class="jdtz_page" value="{{$arr[1]['tiaoz']}}">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            {{--一条线--}}
+            <div class="noneed_page1"></div>
+
+            {{--最后一层逻辑--}}
+            <div class="home_page_one luoji">
+                <div class="page_one_top">
+                    <div class="one_yuyin">
+                        <div class="one_yuyin_title">板块跳转</div>
+                        <div class="one_yuyin_text">
+                            <input type="text" class="jdtz_page" value="{{$arr[2]['tiaoz']}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page spot_page">
+            <div class="home_page_one">
+                <div class="page_one_top">
+                    <div class="one_yuyin">
+                        <div class="one_yuyin_title">语音内容</div>
+                        <div class="one_yuyin_text">
+                            <!-- <input type="text"> -->
+                            <textarea class="one_voice">
+									好的
+								</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-bottom"></div>
+        <div class="lis-center-bottom edit_and_delete">
+            <div class="center-bottom-text">当前为预览模式可选择编辑和删除</div>
+            <div class="center-bottom-btn" id="edit_page">编辑</div>
+            <div class="center-bottom-btn delete_page">删除</div>
+        </div>
+        <div class="lis-center-bottom just_keep">
+            <div class="center-bottom-text">当前为编辑模式可选择保存</div>
+            <div class="center-bottom-btn" id="keep_page">保存</div>
+        </div>
+    </div>
+    <div class="lis-right"></div>
+    <!-- 弹窗 -->
+    <!-- <div class="addTitle">
+        <div>板块名称</div>
+        <div>
+            <input type="text" value="" class="plateName">
+        </div>
+    </div> -->
+</div>
+<script src="https://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="/layer/layer.js"></script>
+<script>
+    // var a = $(".one_voice").val();
+    var aaa = new Array();
+    var b = 1;
+    window.onload=function(){
+        $(".firstPage").css("background-color","#5ec4f1")
+        $(".firstPage").css("color","#fff")
+        $(".home_page").show()
+        $(".spot_page").hide()
+        $(".just_keep").hide()
+    }
+
+    $(".firstPage").click(function(){
+        $(".firstPage").css("background-color","#5ec4f1")
+        $(".firstPage").css("color","#fff")
+        $(".home_page").show()
+        $(".spot_page").hide()
+        $(".secondPages").css("background-color","#ccc")
+        $(".secondPages").css("color","#000")
+    })
+    $(".secondPages").click(function(){
+        $(".secondPages").css("background-color","#5ec4f1")
+        $(".secondPages").css("color","#fff")
+        $(".home_page").hide()
+        $(".spot_page").show()
+        $(".firstPage").css("background-color","#ccc")
+        $(".firstPage").css("color","#000")
+    })
+    $("#edit_page").click(function(){
+        $(".center_meng").hide()
+        $(".edit_and_delete").hide()
+        $(".just_keep").show()
+    })
+    $("#keep_page").click(function(){
+        $(".center_meng").show()
+        $(".edit_and_delete").show()
+        $(".just_keep").hide()
+
+    })
+
+    $("#keep_page").click(function () {
+        // var data = {"user_id":1,"store_id":2};
+        var data = new Object();
+        var all = new Array();
+        var res = getData()
+        for (var i = 0; i < res.length; i++) {
+            data = {'menus':res[i]['menus'],"yuyin":res[i]['yuyin'],"wenzi":res[i]['wenzi'],"tiaoz":res[i]['tiaoz']};
+            all.push(data);
+        }
+        saveData(all)
+    })
+
+    //获取内容
+    function getData() {
+        var yuyi = new Array()
+        var arr = new Object();
+        $(".luoji").each(function () {
+            var data = new Array()
+            //获取语音内容、文字内容和跳转模块
+            var yuyin = $(this).find(".one_voice").val()
+            var wenzi = $(this).find(".one_words").val()
+            var tiaoz = $(this).find(".jdtz_page").val()
+            if (typeof(yuyin) == "undefined") {
+                yuyin = ''
+            }
+            if (typeof(wenzi) == "undefined") {
+                wenzi = ''
+            }
+            if (typeof(tiaoz) == "undefined") {
+                tiaoz = ''
+            }
+
+            //获取按钮
+            var menus = new Array();
+            $(this).find(".bot_input ").each(function () {
+                menus.push($(this).val())
+            })
+
+            data.yuyin = yuyin
+            data.wenzi = wenzi
+            data.tiaoz = tiaoz
+            data.menus = menus
+            yuyi.push(data)
+        })
+        return yuyi
+    }
+
+    //保存数据
+    function saveData(data) {
+        var str = JSON.stringify(data);
+        $.ajax({
+            url:'/admin/yuyi/saveData',
+            type:'post',
+            dataType:'json',
+            traditional: true,//这里设置为true
+            data:{
+                menus_id:1,
+                data:str
+            },
+            success:function (data) {
+                console.log(data)
+                layer.msg('保存成功')
+            }
+        });
+    }
+</script>
+</body>
+</html>
